@@ -27,6 +27,8 @@ Partial Class ConsultarExel
         Button1 = New Button()
         Label2 = New Label()
         Label3 = New Label()
+        Label4 = New Label()
+        Label5 = New Label()
         SuspendLayout()
         ' 
         ' Label1
@@ -59,24 +61,44 @@ Partial Class ConsultarExel
         Label2.AutoSize = True
         Label2.Location = New Point(127, 241)
         Label2.Name = "Label2"
-        Label2.Size = New Size(63, 15)
+        Label2.Size = New Size(28, 15)
         Label2.TabIndex = 3
-        Label2.Text = "Respuesta:"
+        Label2.Text = "Rut:"
         ' 
         ' Label3
         ' 
         Label3.AutoSize = True
         Label3.Location = New Point(196, 241)
         Label3.Name = "Label3"
-        Label3.Size = New Size(41, 15)
+        Label3.Size = New Size(81, 15)
         Label3.TabIndex = 4
-        Label3.Text = "Label3"
+        Label3.Text = "ej: 12312312-1"
+        ' 
+        ' Label4
+        ' 
+        Label4.AutoSize = True
+        Label4.Location = New Point(127, 208)
+        Label4.Name = "Label4"
+        Label4.Size = New Size(54, 15)
+        Label4.TabIndex = 5
+        Label4.Text = "Nombre:"
+        ' 
+        ' Label5
+        ' 
+        Label5.AutoSize = True
+        Label5.Location = New Point(196, 208)
+        Label5.Name = "Label5"
+        Label5.Size = New Size(77, 15)
+        Label5.TabIndex = 6
+        Label5.Text = "ej: Juan Perez"
         ' 
         ' ConsultarExel
         ' 
-        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
+        Controls.Add(Label5)
+        Controls.Add(Label4)
         Controls.Add(Label3)
         Controls.Add(Label2)
         Controls.Add(Button1)
@@ -93,4 +115,6 @@ Partial Class ConsultarExel
     Friend WithEvents Button1 As Button
     Friend WithEvents Label2 As Label
     Friend WithEvents Label3 As Label
+    Friend WithEvents Label4 As Label
+    Friend WithEvents Label5 As Label
 End Class

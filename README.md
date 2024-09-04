@@ -1,1 +1,1 @@
-Esta es una prueba de VisualBasic en Visual Community una aplicacion para escritorio en Windows, Actualmente el archivo de inicio es SearchArchive.vd, Si se desea cambiar para ver las demas pruebas puedes cambiarlo desde las propiedades del proyecto
+Esta es una prueba de VisualBasic en Visual Community una aplicacion para escritorio en Windows, Actualmente el archivo de inicio es ConsultarProducto.vd, Si se desea cambiar para ver las demas pruebas puedes cambiarlo desde las propiedades del proyecto

@@ -23,7 +23,6 @@ Partial Class InsertBD
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Label1 = New Label()
-        Label2 = New Label()
         Label3 = New Label()
         TextBox2 = New TextBox()
         TextBox1 = New TextBox()
@@ -41,6 +40,9 @@ Partial Class InsertBD
         Button1 = New Button()
         Label8 = New Label()
         TextBox5 = New TextBox()
+        Button2 = New Button()
+        Button3 = New Button()
+        Button4 = New Button()
         Panel1.SuspendLayout()
         SuspendLayout()
         ' 
@@ -52,15 +54,6 @@ Partial Class InsertBD
         Label1.Size = New Size(25, 15)
         Label1.TabIndex = 0
         Label1.Text = "Rut"
-        ' 
-        ' Label2
-        ' 
-        Label2.AutoSize = True
-        Label2.Location = New Point(245, 44)
-        Label2.Name = "Label2"
-        Label2.Size = New Size(138, 15)
-        Label2.TabIndex = 2
-        Label2.Text = "rut(ejemplo): 12345678-9"
         ' 
         ' Label3
         ' 
@@ -185,8 +178,8 @@ Partial Class InsertBD
         ' 
         ' Button1
         ' 
-        Button1.BackColor = SystemColors.ActiveCaption
-        Button1.Location = New Point(142, 463)
+        Button1.BackColor = SystemColors.Control
+        Button1.Location = New Point(152, 463)
         Button1.Name = "Button1"
         Button1.Size = New Size(75, 23)
         Button1.TabIndex = 14
@@ -209,12 +202,44 @@ Partial Class InsertBD
         TextBox5.Size = New Size(213, 23)
         TextBox5.TabIndex = 16
         ' 
+        ' Button2
+        ' 
+        Button2.Location = New Point(275, 44)
+        Button2.Name = "Button2"
+        Button2.Size = New Size(75, 23)
+        Button2.TabIndex = 17
+        Button2.Text = "Buscar"
+        Button2.UseVisualStyleBackColor = True
+        ' 
+        ' Button3
+        ' 
+        Button3.Location = New Point(38, 463)
+        Button3.Name = "Button3"
+        Button3.Size = New Size(70, 23)
+        Button3.TabIndex = 18
+        Button3.Text = "Button3"
+        Button3.UseVisualStyleBackColor = True
+        Button3.Visible = False
+        ' 
+        ' Button4
+        ' 
+        Button4.Location = New Point(275, 463)
+        Button4.Name = "Button4"
+        Button4.Size = New Size(75, 23)
+        Button4.TabIndex = 19
+        Button4.Text = "Button4"
+        Button4.UseVisualStyleBackColor = True
+        Button4.Visible = False
+        ' 
         ' InsertBD
         ' 
-        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
         AutoScaleMode = AutoScaleMode.Font
         BackgroundImage = My.Resources.Resources.white
         ClientSize = New Size(395, 527)
+        Controls.Add(Button4)
+        Controls.Add(Button3)
+        Controls.Add(Button2)
         Controls.Add(TextBox5)
         Controls.Add(Label8)
         Controls.Add(Button1)
@@ -229,9 +254,9 @@ Partial Class InsertBD
         Controls.Add(TextBox1)
         Controls.Add(TextBox2)
         Controls.Add(Label3)
-        Controls.Add(Label2)
         Controls.Add(Label1)
         Name = "InsertBD"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "InsertBD"
         Panel1.ResumeLayout(False)
         Panel1.PerformLayout()
@@ -240,7 +265,6 @@ Partial Class InsertBD
     End Sub
 
     Friend WithEvents Label1 As Label
-    Friend WithEvents Label2 As Label
     Friend WithEvents Label3 As Label
     Friend WithEvents TextBox2 As TextBox
     Friend WithEvents TextBox1 As TextBox
@@ -258,4 +282,7 @@ Partial Class InsertBD
     Friend WithEvents Button1 As Button
     Friend WithEvents Label8 As Label
     Friend WithEvents TextBox5 As TextBox
+    Friend WithEvents Button2 As Button
+    Friend WithEvents Button3 As Button
+    Friend WithEvents Button4 As Button
 End Class

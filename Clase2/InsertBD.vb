@@ -77,79 +77,96 @@ Public Class InsertBD
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        ' Obtener el RUT a buscar
-        Dim rut As String = TextBox1.Text
+        ' Verificar si el botón está en modo "Buscar" o "Limpiar"
+        If Button2.Text = "Buscar" Then
+            ' Obtener el RUT a buscar
+            Dim rut As String = TextBox1.Text
 
-        ' Verificar que el RUT no esté vacío
-        If String.IsNullOrEmpty(rut) Then
-            MessageBox.Show("Por favor ingrese un RUT.")
-            Exit Sub
-        End If
+            ' Verificar que el RUT no esté vacío
+            If String.IsNullOrEmpty(rut) Then
+                MessageBox.Show("Por favor ingrese un RUT.")
+                Exit Sub
+            End If
 
-        ' Crear la consulta SQL para buscar el registro
-        Dim query As String = "SELECT Nombre, Apellido, Sexo, Comuna, Ciudad, Observacion FROM personas WHERE RUT = @rut"
+            ' Crear la consulta SQL para buscar el registro
+            Dim query As String = "SELECT Nombre, Apellido, Sexo, Comuna, Ciudad, Observacion FROM personas WHERE RUT = @rut"
 
-        ' Ejecutar la consulta
-        Using connection As New MySqlConnection(connectionString)
-            Using command As New MySqlCommand(query, connection)
-                command.Parameters.AddWithValue("@rut", rut)
+            ' Ejecutar la consulta
+            Using connection As New MySqlConnection(connectionString)
+                Using command As New MySqlCommand(query, connection)
+                    command.Parameters.AddWithValue("@rut", rut)
 
-                Try
-                    connection.Open()
-                    Using reader As MySqlDataReader = command.ExecuteReader()
-                        If reader.Read() Then
-                            ' Si se encuentra el registro, llenar los campos con los datos
-                            TextBox2.Text = reader("Nombre").ToString()
-                            TextBox3.Text = reader("Apellido").ToString()
+                    Try
+                        connection.Open()
+                        Using reader As MySqlDataReader = command.ExecuteReader()
+                            If reader.Read() Then
+                                ' Si se encuentra el registro, llenar los campos con los datos
+                                TextBox2.Text = reader("Nombre").ToString()
+                                TextBox3.Text = reader("Apellido").ToString()
 
-                            Dim sexo As String = reader("Sexo").ToString()
-                            CheckBox1.Checked = (sexo = "Masculino")
-                            CheckBox2.Checked = (sexo = "Femenino")
-                            CheckBox3.Checked = (sexo = "No Identifica")
+                                Dim sexo As String = reader("Sexo").ToString()
+                                CheckBox1.Checked = (sexo = "Masculino")
+                                CheckBox2.Checked = (sexo = "Femenino")
+                                CheckBox3.Checked = (sexo = "No Identifica")
 
-                            ComboBox1.SelectedItem = reader("Comuna").ToString()
-                            TextBox5.Text = reader("Ciudad").ToString()
-                            TextBox4.Text = reader("Observacion").ToString()
+                                ComboBox1.SelectedItem = reader("Comuna").ToString()
+                                TextBox5.Text = reader("Ciudad").ToString()
+                                TextBox4.Text = reader("Observacion").ToString()
 
-                            ' Hacer visibles los botones de edición y eliminación
-                            Button3.Visible = True
-                            Button4.Visible = True
+                                ' Cambiar el texto del botón a "Limpiar"
+                                Button2.Text = "Limpiar"
 
-                            ' Asegurar que Button3 diga "Editar"
-                            Button3.Text = "Editar"
-
-                        Else
-                            ' Si no se encuentra el registro, mostrar un mensaje de confirmación
-                            Dim result As DialogResult = MessageBox.Show("El RUT no se encuentra, ¿desea crear un nuevo usuario?", "Crear Nuevo Usuario", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-                            If result = DialogResult.Yes Then
-                                ' Limpiar los campos y desbloquear para un nuevo ingreso
-                                LimpiarCampos()
-                                DesbloquearCampos()
-
-                                ' Ocultar el Button4 ya que no se necesita para la creación
-                                Button4.Visible = False
-                                ' Mostrar el Button3 para la acción de guardar
-                                Button3.Visible = False
-                                Button1.Visible = True
-
+                                ' Hacer visibles los botones de edición y eliminación
+                                Button3.Visible = True
+                                Button4.Visible = True
 
                             Else
-                                ' Si el usuario elige no crear un nuevo usuario, bloquear los campos
-                                BloquearCampos()
-                                LimpiarCampos()
-                                ' Ocultar los botones de edición y eliminación
-                                Button3.Visible = False
-                                Button4.Visible = False
+                                ' Si no se encuentra el registro, mostrar un mensaje de confirmación
+                                Dim result As DialogResult = MessageBox.Show("El RUT no se encuentra, ¿desea crear un nuevo usuario?", "Crear Nuevo Usuario", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                                If result = DialogResult.Yes Then
+                                    ' Limpiar los campos y desbloquear para un nuevo ingreso
+                                    LimpiarCampos()
+                                    DesbloquearCampos()
+
+                                    ' Ocultar el Button4 ya que no se necesita para la creación
+                                    Button4.Visible = False
+                                    ' Mostrar el Button3 para la acción de guardar
+                                    Button3.Visible = False
+                                    Button1.Visible = True
+                                Else
+                                    ' Si el usuario elige no crear un nuevo usuario, bloquear los campos
+                                    BloquearCampos()
+                                    LimpiarCampos()
+
+                                    ' Ocultar los botones de edición y eliminación
+                                    Button3.Visible = False
+                                    Button4.Visible = False
+                                End If
                             End If
-                        End If
-                    End Using
-                Catch ex As MySqlException
-                    MessageBox.Show("Error: " & ex.Message)
-                Finally
-                    connection.Close()
-                End Try
+                        End Using
+                    Catch ex As MySqlException
+                        MessageBox.Show("Error: " & ex.Message)
+                    Finally
+                        connection.Close()
+                    End Try
+                End Using
             End Using
-        End Using
+
+        ElseIf Button2.Text = "Limpiar" Then
+            ' Si el botón está en modo "Limpiar", ejecutar LimpiarCampos()
+            LimpiarCampos()
+            TextBox1.Text = ""
+
+            ' Cambiar el texto del botón a "Buscar"
+            Button2.Text = "Buscar"
+
+            ' Bloquear campos nuevamente
+            BloquearCampos()
+
+            ' Ocultar los botones de edición y eliminación
+            Button3.Visible = False
+            Button4.Visible = False
+        End If
     End Sub
 
     ' Método para limpiar los campos
@@ -181,7 +198,7 @@ Public Class InsertBD
 
                     If count > 0 Then
                         ' Si el RUT ya existe, mostrar un mensaje de error
-                        MessageBox.Show("El RUT ya existe. No puedes guardar un usuario ya creado. Puedes editarlo o eliminarlo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        MessageBox.Show("El RUT ya existe. No puedes guardar un usuario ya creado. Puedes Editar o Eliminar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         Exit Sub
                     End If
                 Catch ex As MySqlException
@@ -286,6 +303,8 @@ Public Class InsertBD
                             connection.Open()
                             command.ExecuteNonQuery()
                             MessageBox.Show("Datos actualizados correctamente")
+                            LimpiarCampos()
+
                         Catch ex As MySqlException
                             MessageBox.Show("Error: " & ex.Message)
                         Finally
@@ -300,6 +319,8 @@ Public Class InsertBD
                 ' Rehabilitar Button1 y Button4
                 Button1.Enabled = True
                 Button4.Enabled = True
+                Button2.Enabled = True
+
 
                 ' Cambiar el texto del botón a "Editar"
                 Button3.Text = "Editar"
@@ -311,6 +332,7 @@ Public Class InsertBD
             ' Deshabilitar Button1 y Button4 mientras está en modo edición
             Button1.Enabled = False
             Button4.Enabled = False
+            Button2.Enabled = False
 
             Button3.Text = "Confirmar"
         End If
@@ -340,6 +362,15 @@ Public Class InsertBD
                     Dim rowsAffected As Integer = command.ExecuteNonQuery()
                     If rowsAffected > 0 Then
                         MessageBox.Show("Registro eliminado correctamente")
+                        LimpiarCampos()
+                        TextBox1.Text = ""
+                        ' Colocar el foco en TextBox1
+                        TextBox1.Focus()
+
+                        ' Mover el cursor del mouse a TextBox1
+                        Dim textBoxLocation As Point = Me.PointToScreen(TextBox1.Location)
+                        Cursor.Position = New Point(textBoxLocation.X + (TextBox1.Width / 2), textBoxLocation.Y + (TextBox1.Height / 2))
+
                     Else
                         MessageBox.Show("No se encontró el RUT especificado")
                     End If
@@ -351,4 +382,29 @@ Public Class InsertBD
             End Using
         End Using
     End Sub
+
+    Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
+        If CheckBox1.Checked Then
+            ' Si CheckBox1 está marcado, desmarcar los otros
+            CheckBox2.Checked = False
+            CheckBox3.Checked = False
+        End If
+    End Sub
+
+    Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox2.CheckedChanged
+        If CheckBox2.Checked Then
+            ' Si CheckBox2 está marcado, desmarcar los otros
+            CheckBox1.Checked = False
+            CheckBox3.Checked = False
+        End If
+    End Sub
+
+    Private Sub CheckBox3_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox3.CheckedChanged
+        If CheckBox3.Checked Then
+            ' Si CheckBox3 está marcado, desmarcar los otros
+            CheckBox1.Checked = False
+            CheckBox2.Checked = False
+        End If
+    End Sub
+
 End Class
